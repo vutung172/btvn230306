@@ -134,9 +134,8 @@ public class RepositoryImpl<T> implements Repository<T> {
     public boolean remove(Class<T> entityClass, Object... keys) {
         try (Connection conn = new MySQLConnect().getConnection()) {
             List<Field> keysField = getKey(entityClass);
-            String keysName = keysField.stream().map(f -> colName(f) + " = ?").collect(Collectors.joining(","));
+            String keysName = keysField.stream().map(f -> colName(f) + " = ?").collect(Collectors.joining(" AND "));
             String sql = MessageFormat.format("DELETE FROM {0} WHERE {1}", tblName(entityClass), keysName);
-
             PreparedStatement ps = conn.prepareStatement(sql);
             int index = 1;
             for (Object key : keys)

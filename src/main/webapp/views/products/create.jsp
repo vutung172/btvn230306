@@ -13,6 +13,9 @@
     <title>Thêm sản phẩm</title>
 </head>
 <body>
+<h1>Thêm sản phẩm mới</h1>
+<h4 style="color: red">${warning}</h4>
+<h4 style="color: green">${success}</h4>
 <form action="/products">
     <label for="productId">Mã sản phẩm :</label>
     <input id="productId" type="text" name="productId"><br>
@@ -24,9 +27,8 @@
     <input id="productBatch" type="text" name="productBatch"><br>
     <label for="productStatus">Trạng thái :</label>
     <input id="productStatus" type="text" name="productStatus"><br>
-    <button name="action" value="create">Thêm</button>
+    <button name="action" value="postCreate">Thêm</button><button><a href="/products?action=index">Trang tìm kiếm</a></button>
 </form>
-<h4>${warning}</h4>
 
 
 

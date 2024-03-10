@@ -5,6 +5,7 @@ import com.ra.repository.Impl.RepositoryImpl;
 import com.ra.service.GeneralService;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ProductServiceImpl implements GeneralService<Product> {
     private RepositoryImpl<Product> productRepository;
@@ -26,6 +27,11 @@ public class ProductServiceImpl implements GeneralService<Product> {
     @Override
     public Product update(Product newProduct) {
         return productRepository.edit(newProduct);
+    }
+
+    @Override
+    public boolean remove(String id) {
+        return productRepository.remove(Product.class,id);
     }
 
     @Override

@@ -55,32 +55,33 @@ public class ProductServlet extends Controller {
     public void create(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setCharacterEncoding("UTF-8");
         req.setCharacterEncoding("UTF-8");
+        req.getRequestDispatcher("views/products/create.jsp").forward(req, resp);
+    }
+
+    public void postCreate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setCharacterEncoding("UTF-8");
+        req.setCharacterEncoding("UTF-8");
         try {
             Product product = new Product();
             product.setProductId(req.getParameter("productId"));
             product.setProductName(req.getParameter("productName"));
             product.setManufacturer(req.getParameter("manufacturer"));
-            product.setBatch(Integer.parseInt(req.getParameter("productBatch") == null ? "0" : req.getParameter("productBatch")));
-            product.setProductStatus(Boolean.parseBoolean(req.getParameter("productStatus") == null ? "false" : req.getParameter("productStatus")));
+            product.setBatch(Integer.parseInt(req.getParameter("productBatch")));
+            product.setProductStatus(Boolean.parseBoolean(req.getParameter("productStatus")));
             product.setQuantity(0);
             product.setCreated(new Date());
             product = productService.create(product);
             if (product != null) {
                 req.setAttribute("product", product);
-                req.setAttribute("warning", "tạo thành công");
+                req.setAttribute("success", "Tạo thành công");
             } else {
-                req.setAttribute("warning", "tạo thất bại");
+                req.setAttribute("warning", "Tạo thất bại");
             }
         }catch (Exception e){
-            req.setAttribute("warning", "tạo thất bại");
+            req.setAttribute("warning", "Tạo thất bại");
             e.printStackTrace();
         }
-        req.getRequestDispatcher("views/products/create.jsp").forward(req, resp);
-    }
-
-    public void postCreate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        req.getRequestDispatcher("views/products/create.jsp").forward(req, resp);
+        create(req,resp);
     }
     public void edit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setCharacterEncoding("UTF-8");
@@ -96,7 +97,7 @@ public class ProductServlet extends Controller {
                 req.setAttribute("editBatch", editProduct.getBatch());
                 req.setAttribute("editStatus", editProduct.getProductStatus());
             } else {
-                req.getRequestDispatcher("views/products/index.jsp").forward(req, resp);
+                index(req,resp);
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -118,19 +119,28 @@ public class ProductServlet extends Controller {
                 editProduct.setCreated(new Date());
                 Product editedProduct = productService.update(editProduct);
                 if (editedProduct != null){
-                    req.setAttribute("key",editedProduct.getProductName());
-                    index(req,resp);
+                    req.setAttribute("success","Cập nhật thành công");
                 } else {
-                    req.setAttribute("warning", " cập nhật thất bại");
-                    req.getRequestDispatcher("views/products/edit.jsp").forward(req, resp);
+                    req.setAttribute("warning", "Cập nhật thất bại");
                 }
-            } else {
-                req.getRequestDispatcher("views/products/index.jsp").forward(req, resp);
             }
         }catch (Exception e){
-            req.setAttribute("warning", " cập nhật thất bại");
-            req.getRequestDispatcher("views/products/edit.jsp").forward(req, resp);
+            req.setAttribute("warning", "Cập nhật thất bại");
             e.printStackTrace();
         }
+        edit(req,resp);
+    }
+    public void postDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setCharacterEncoding("UTF-8");
+        req.setCharacterEncoding("UTF-8");
+        try{
+            String productId = req.getParameter("id");
+            if (!productService.remove(productId)){
+                req.setAttribute("warning","Xóa thất bại");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        index(req,resp);
     }
 }

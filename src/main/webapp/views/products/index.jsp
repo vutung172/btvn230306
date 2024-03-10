@@ -21,7 +21,9 @@
         <button>Tìm</button>
     </form>
 </div>
-<p><a href="/products?action=create">Thêm mới</a></p>
+<button><a href="/products?action=create">Thêm mới</a></button>
+<h5 style="color: red">${warning}</h5>
+<h5 style="color: green">${success}</h5>
 <p>Tổng số: ${totalProducts} sản phẩm</p>
 <table border="1" cellpadding="5" cellspacing="0" width="100%">
     <tr>
@@ -51,20 +53,18 @@
             </td>
             <td><fmt:formatDate value="${p.getCreated()}" pattern="dd/MM/yyyy"/></td>
             <td>
-                <a href="/products?action=edit&id=${p.getProductId()}">Sửa</a> |
-                <a href="/products?action=delete&id=${p.getProductId()}">Xóa</a>
+                <button><a href="/products?action=edit&id=${p.getProductId()}">Sửa</a></button>
+                <button><a href="/products?action=postDelete&id=${p.getProductId()}">Xóa</a></button>
             </td>
         </tr>
     </c:forEach>
 </table>
 <c:forEach begin="1" end="${totalPages}" varStatus="loop">
     <c:if test="${page == loop.index}">
-        <%--            <button type="button" disabled>${loop.index}</button>--%>
-        <a href="/products?action=index&key=${key}&page=${loop.index}">${loop.index}</a>
+        <button type="button" disabled><a href="/products?action=index&key=${key}&page=${loop.index}">${loop.index}</a></button>
     </c:if>
     <c:if test="${page != loop.index}">
-        <%--            <button type="button">${loop.index}</button>--%>
-        <a href="/products?action=index&key=${key}&page=${loop.index}">${loop.index}</a>
+        <button><a href="/products?action=index&key=${key}&page=${loop.index}">${loop.index}</a></button>
     </c:if>
 </c:forEach>
 </body>
