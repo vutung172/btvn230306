@@ -150,7 +150,7 @@ public class RepositoryImpl<T> implements Repository<T> {
     }
 
     @Override
-    public List<T> findAllByPagination(Class<T> entityClass, Integer pageNumber) {
+    public List<T> findAllByPagination(Class<T> entityClass,Integer pageSize, Integer pageNumber) {
         List<T> result = new ArrayList<>();
         try (Connection conn = new MySQLConnect().getConnection()) {
             if (pageNumber > 0) {
@@ -223,18 +223,20 @@ public class RepositoryImpl<T> implements Repository<T> {
     }
 
     @Override
-    public List<T> findByIndexesPagination(Class<T> entityClass, String any, Integer pageNumber) {
+    public List<T> findByIndexesPagination(Class<T> entityClass, Integer pageSize,Integer pageNumber, Object... anys) {
         List<T> result = new ArrayList<>();
         try (Connection conn = new MySQLConnect().getConnection()) {
             List<Field> keysField = getIndexes(entityClass);
             String keysName = keysField.stream().map(f -> colName(f) + " LIKE concat('%',?,'%')").collect(Collectors.joining(" OR "));
             if (pageNumber > 0) {
-                int offset = (pageNumber - 1) * 10;
-                String sql = MessageFormat.format("SELECT * FROM {0} WHERE {1} LIMIT 10 OFFSET {2}", tblName(entityClass), keysName, offset);
+                int offset = (pageNumber - 1) * pageSize;
+                String sql = MessageFormat.format("SELECT * FROM {0} WHERE {1} LIMIT {2} OFFSET {3}", tblName(entityClass), keysName, pageSize, offset);
 
                 PreparedStatement ps = conn.prepareStatement(sql);
-                for (int i = 1; i <= keysField.size(); i++)
-                    ps.setObject(i, any);
+                int index = 1;
+                for (Object any : anys) {
+                    ps.setObject(index++, any);
+                }
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
                     T entity = readResultSet(rs, entityClass);

@@ -1,9 +1,8 @@
-package com.ra.servlet;
+package com.ra.controller;
 
-import com.ra.entity.Category;
+import com.ra.model.entity.Category;
 import com.ra.service.CategoryService;
 import com.ra.service.Impl.CategoryServiceImpl;
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

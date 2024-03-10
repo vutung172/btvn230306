@@ -1,6 +1,6 @@
 package com.ra.service.Impl;
 
-import com.ra.entity.Category;
+import com.ra.model.entity.Category;
 import com.ra.repository.Impl.RepositoryImpl;
 import com.ra.service.CategoryService;
 

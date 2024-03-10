@@ -1,4 +1,4 @@
-package com.ra.entity;
+package com.ra.model.entity;
 
 import com.ra.util.Annotation.Column;
 import com.ra.util.Annotation.Id;

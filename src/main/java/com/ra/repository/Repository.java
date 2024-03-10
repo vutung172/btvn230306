@@ -10,10 +10,10 @@ public interface Repository<T> {
     boolean remove(Class<T> entityClass, Object... keys);
     //Thêm
     T addIgnoreId(T entity);
-    List<T> findAllByPagination(Class<T> entityClass,Integer pageNumber);
+    List<T> findAllByPagination(Class<T> entityClass,Integer pageSize,Integer pageNumber);
     List<T> findRelativeByIndexes(Class<T> entityClass, Object... anys);
     List<T> findAbsoluteByIndexes(Class<T> entityClass, Object... any);
-    List<T> findByIndexesPagination(Class<T> entityClass, String any,Integer pageNumber);
+    List<T> findByIndexesPagination(Class<T> entityClass, Integer pageSize, Integer pageNumber, Object... anys);
     List<T> findByMark(Class<T> entityClass, Object... targets);
 
     T authenticator(Class<T> entityClass, Object... keys);

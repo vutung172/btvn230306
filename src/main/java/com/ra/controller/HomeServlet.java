@@ -1,4 +1,4 @@
-package com.ra.servlet;
+package com.ra.controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

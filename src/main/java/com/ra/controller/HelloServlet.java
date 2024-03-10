@@ -1,4 +1,4 @@
-package com.ra.servlet;
+package com.ra.controller;
 
 import java.io.*;
 import javax.servlet.http.*;

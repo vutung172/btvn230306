@@ -9,7 +9,7 @@ public class MySQLConnect {
     public MySQLConnect() {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver"); // xác nhận driver dùng cho MySQL
-            String url = "jdbc:mysql://localhost:3306/btvn_240126";
+            String url = "jdbc:mysql://localhost:3306/warehouse_manager";
             String user = "root";
             String password = "Vtt$88842648864";
             this.connection = DriverManager.getConnection(url,user,password);//connect tới database sử dụng

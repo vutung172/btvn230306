@@ -1,6 +1,6 @@
 package com.ra.service;
 
-import com.ra.entity.Category;
+import com.ra.model.entity.Category;
 
 import java.util.List;
 
